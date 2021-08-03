@@ -9,29 +9,15 @@ def home(response):
     j = json.loads(r.text)
     dict = {}
 
+    googleAPI = os.environ.get("GOOGLEAPI")
+
     dir = response.GET.get('dir')
     type = response.GET.get('type')
-
-    # print(response.GET.get('name'), os.getcwd())
 
     if dir is None:
         dir = 'A'
     if type is None:
         type = '@'
-
-    # for i in range(len(j)):
-    #     if dir == 'A':
-    #         lat = j[i].get('latitude')
-    #         lng = j[i].get('longitude')
-    #         info['adr'] = j[i].get('location_detail')
-    #         info['type'] = j[i].get('type_description')
-    #         dict[lat] = lng
-    #     elif j[i].get('orientation') == dir:
-    #         lat = j[i].get('latitude')
-    #         lng = j[i].get('longitude')
-    #         info['adr'] = j[i].get('location_detail')
-    #         info['type'] = j[i].get('type_description')
-    #         dict[lat] = lng
 
     lat = []
     lng = []
@@ -58,5 +44,4 @@ def home(response):
 
     lists = zip(lat, lng, adr, typ)
 
-    # return render(response, 'main/home.html', {'dict':dict, 'info':info})
-    return render(response, 'main/home.html', {'dict':dict, 'lists':lists})
+    return render(response, 'main/home.html', {'dict':dict, 'lists':lists, 'googleAPI':googleAPI})
