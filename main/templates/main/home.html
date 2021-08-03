@@ -1,0 +1,304 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="shortcut icon" href="{% static 'img/favicon-0.png' %}" />
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+  <title>Bench Date</title>
+</head>
+
+<body>
+  <h1>Bench Date</h1>
+  <h2>You Deserve A Break</h2>
+
+  <style>
+    h1 { color: #686544; font-family: 'Trocchi', serif; font-size: 50px; font-weight: normal; line-height: 72px; margin: 0; margin-inline: 30%; text-align: center; border-bottom:5px solid #b4a83e}
+    h2 { color: #686544; font-family: 'Droid serif', serif; font-size: 30px; font-weight: 400; font-style: italic; line-height: 44px; margin: 0 0 12px; margin-block-end: 0px; text-align: center; }
+    /* h1 { color: #c9d0d4; font-family: 'Helvetica Neue', sans-serif; font-size: 46px; font-weight: 100; line-height: 50px; letter-spacing: 1px; padding: 0 0 40px; border-bottom: double #555; } */
+
+    #map {
+      left: 10%;
+      height: 55%;
+      width: 80%;
+      display: block;
+    }
+
+    @import url("https://fonts.googleapis.com/css2?family=Sacramento&display=swap");
+    body {
+      background: linear-gradient(180deg, #ffecd2 0%, #fcb69f 100%);
+      height: 100vh;
+    }
+
+    body .container,
+    body .button,
+    body .sun,
+    body .button span {
+      position: absolute;
+    }
+    body .container {
+      margin: auto;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: -90%;
+      width: 200px;
+      height: 200px;
+    }
+    body .container a:hover .sun {
+      top: -20%;
+      transition: all 1s ease-in-out;
+      box-shadow: 0px 0px 10px #ffdc2a;
+    }
+    body .container a:hover .button {
+      /* box-shadow: 0px 0px 36px #c80de0; */
+      box-shadow: 0px 0px 36px #ff03d5;
+      transition: all 0.3s ease-in-out;
+    }
+    body .container .sun {
+      width: 20%;
+      height: 20%;
+      left: -25%;
+      top:-7%;
+      background: linear-gradient(180deg, #ffdc2a 0%, #fb2182 41.54%);
+      box-shadow: 0px 0px 36px #ffdc2a;
+      z-index: 2;
+      border-radius: 65px;
+      transition: all 1s ease-in-out;
+    }
+    body .container .button {
+      width: 40%;
+      height: 22%;
+      background: #2c0055;
+      box-shadow: 0px 0px 10px #c80de0;
+      border-radius: 30px;
+      z-index: 3;
+      transition: all 1s ease-in-out;
+      border-image: linear-gradient(#360154, #d442d5) 30;
+      left: -35%;
+    }
+
+    body .container .button span {
+      text-align: center;
+      font-family: "Sacramento", cursive;
+      left: 12%;
+      font-size: 140%;
+      line-height: 195%;
+      margin: 0 auto;
+      transition: all 0.3s ease-in-out;
+      background: -webkit-linear-gradient(#ffdc2a, #fb2182);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    #north {
+      left: 16%;
+      top:-120px;
+    }
+        
+    #north span{
+      left: 9%;
+    }
+
+    #east {
+      left: 28%;
+    }
+
+    #east span{
+      left: 18%;
+    }
+    
+    #west {
+      left: 3.5%;
+    }
+
+    #west span{
+      left: 15%;
+    }
+
+    #south {
+      left: 16%;
+      top:120px;
+    }
+    
+    #south span{
+      left: 9%;
+    }
+
+    #all {
+      left: 16%;
+    }
+
+    #all span{
+      left: 28%;
+    }
+
+    #bench {
+      left: -9%;
+    }
+
+    #bench span{
+      left: 9%;
+    }
+
+    #table {
+      left: 40.5%;
+    }
+
+    #table span{
+      left: 10%;
+    }
+
+  </style>
+  <div class="container" id='west'>
+    <a href="{% url 'filter' %}?dir=W">
+      <div class="button">
+        <span>West</span>
+      </div>
+      <div class="sun"></div>
+    </a>
+  </div>
+
+  <div class="container" id='north'>
+    <a href="{% url 'filter' %}?dir=N">
+      <div class="button">
+        <span>North</span>
+      </div>
+  </div>
+
+  <div class="container" id='east'>
+    <a href="{% url 'filter' %}?dir=E">
+      <div class="button">
+        <span>East</span>
+      </div>
+  </div>
+
+  <div class="container" id='south'>
+    <a href="{% url 'filter' %}?dir=S">
+      <div class="button">
+        <span>South</span>
+      </div>
+  </div>
+
+  <div class="container" id='all'>
+    <a href="{% url 'filter' %}?dir=A">
+      <div class="button">
+        <span>All</span>
+      </div>
+  </div>
+
+  <div class="container" id='bench'>
+    <a href="{% url 'filter' %}?type=BENCH">
+      <div class="button">
+        <span>Bench</span>
+      </div>
+  </div>
+
+  <div class="container" id='table'>
+    <a href="{% url 'filter' %}?type=TABLE">
+      <div class="button">
+        <span>Table</span>
+      </div>
+  </div>
+    <a href="#">
+
+  <div id="map"></div>
+    <script>
+      function initMap() {
+        //create map
+        map = new google.maps.Map(document.getElementById("map"), {
+          center: {lat: 51.0489397, lng: -114.0855771},
+          zoom: 11,
+        });
+
+        //get current location
+        infoWindow = new google.maps.InfoWindow();
+
+        const locationButton = document.createElement("button");
+        locationButton.textContent = "Pan to Current Location";
+        locationButton.classList.add("custom-map-control-button");
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+        locationButton.addEventListener("click", () => {
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+              };
+              infoWindow.setPosition(pos);
+              infoWindow.setContent("Location found.");
+              infoWindow.open(map);
+              console.log(pos);
+              map.setCenter(pos);
+            },
+            () => {
+              handleLocationError(true, infoWindow, map.getCenter());
+            }
+          );
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, map.getCenter());
+        }
+        });
+
+        //create markers
+        {% for lat, lng, adr, typ in lists %}
+          addMarker({coords:{lat: {{lat}}, lng: {{lng}}}, adr:'{{adr}}', typ:'{{typ}}'})
+        {% endfor %} 
+
+        var InfoObj = [];
+
+        //add marker function
+        function addMarker(props) {
+          if (props.typ.includes('TABLE')) {
+            var marker = new google.maps.Marker({
+              position: props.coords,
+              map: map,
+              icon: 'http://maps.google.com/mapfiles/kml/pal4/icon47.png'
+            });
+          } else {
+              var marker = new google.maps.Marker({
+              position: props.coords,
+              map: map,
+              icon: '{% static "img/favicon.ico" %}'
+              //icon: 'http://maps.google.com/mapfiles/kml/pal4/icon47.png'
+            });
+          }
+
+          var infoWindow = new google.maps.InfoWindow({
+            content: props.adr
+          });
+
+          marker.addListener('click', function() {
+            closeWindow();
+            infoWindow.open(map, marker);
+            InfoObj[0] = infoWindow;
+          });
+        }
+
+        function closeWindow() {
+          if (InfoObj.length > 0) {
+            InfoObj[0].set('marker', null);
+            InfoObj[0].close();
+            InfoObj[0].length = 0;
+          }
+        }
+      }
+    </script>
+
+
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN9KMFL5lLxXckJPe_9hdRUVd431tMANI&callback=initMap&libraries=&v=weekly"
+    async
+  ></script>
+</body>
+</html>
